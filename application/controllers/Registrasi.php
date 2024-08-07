@@ -82,7 +82,7 @@ http://localhost/rest-prior/confirm/cek/' . (base64_encode($this->get('email') .
             if ($mail['status']) {
                 $this->response([
                     'status' => TRUE,
-                    'message' => 'Please check your email to activated your account'
+                    'message' => 'Reset password success, please check your email to activated your account'
                 ], RESTController::HTTP_OK);
             } else {
                 $this->response([
@@ -125,10 +125,17 @@ http://localhost/rest-prior/confirm/cek/' . (base64_encode($this->get('email') .
         } else {
             $cekemail = $this->regis->cekemail($this->post('email'));
             if($cekemail) {
-                $this->response([
-                    'status' => FALSE,
-                    'message' => 'Your email has been registered'
-                ], RESTController::HTTP_BAD_REQUEST);
+                if($cekemail[0]['status'] == 0) {
+                    $this->response([
+                        'status' => FALSE,
+                        'message' => 'Your account is not active yet, please check your email for activation'
+                    ], RESTController::HTTP_BAD_REQUEST);
+                } else {
+                    $this->response([
+                        'status' => FALSE,
+                        'message' => 'Your email has been registered'
+                    ], RESTController::HTTP_BAD_REQUEST);
+                }
             } else {
                 $verif = $this->guidv4();
                 $input = array(

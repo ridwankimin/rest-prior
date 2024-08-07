@@ -3,31 +3,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class KomoditasModel extends CI_Model
 {
-    function get_all_kh() {
-        return $this->db->get('komoditas_hewan')->result_array();
+    function getKomoditasPrior($id) {
+        return $this->db->get_where('dtl_komoditi', array('id' => $id))->result_array();
     }
     
-    function get_all_kt() {
-        return $this->db->get('komoditas_tumbuhan')->result_array();
+    function getKomoditasDocPrior($id) {
+        return $this->db->get_where('dtl_komoditi', array('docnbr' => $id))->result_array();
     }
     
-    function get_all_ki() {
-        return $this->db->get('komoditas_ikan')->result_array();
+    function getMasterKomoditasReg($id) {
+        $this->db->like('recog_country', $id);
+        $this->db->or_like('reg_lab', $id);
+        return $this->db->get('komoditas')->result_array();
     }
     
-    function get_by_klas_id_kh($id) {
-        $this->db->select('id,nama,nama_en,nama_latin');
-        return $this->db->get_where('komoditas_hewan', array('klas_id' => $id))->result_array();
+    function insertKomoditasPrior($data) {
+        $this->db->insert('dtl_komoditi', $data);
+        return $this->db->affected_rows();
     }
     
-    function get_by_klas_id_kt($id) {
-        $this->db->select('id,nama,nama_en,nama_latin');
-        return $this->db->get_where('komoditas_tumbuhan', array('kode_golongan' => $id))->result_array();
+    function updateKomoditasPrior($data, $id) {
+        $this->db->where('id', $id);
+        $this->db->update('dtl_komoditi', $data);
+        return $this->db->affected_rows();
     }
     
-    function get_by_klas_id_ki($id) {
-        $this->db->select('id,nama,nama_en,nama_latin');
-        // return $this->db->get_where('komoditas_ikan', array('klas_id' => $id))->result_array();
-        return $this->db->get_where('komoditas_ikan')->result_array();
+    function deleteKomoditasPrior($id) {
+        $this->db->where('id', $id);
+        $this->db->delete('dtl_komoditi');
+        return $this->db->affected_rows();
     }
 }
