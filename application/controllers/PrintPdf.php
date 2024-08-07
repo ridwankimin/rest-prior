@@ -26,7 +26,7 @@ class PrintPdf extends CI_Controller
         $this->load->library('mypdf');
         $this->load->library('ciqrcode');
         
-        $string = base_url() . 'print/' . base64_encode($id);
+        $string = base_url() . 'printPdf/doc/' . base64_encode($id);
         ob_start();
         $params['data'] = $string;
         $this->ciqrcode->generate($params);
