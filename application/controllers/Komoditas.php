@@ -130,6 +130,7 @@ class Komoditas extends RestController
             $insert = array(
                 'id' => $id,
                 'docnbr' => $this->post('docnbr'),
+                'is_psat' => $this->post('is_psat'),
                 'kd_komoditi' => $this->post('kd_komoditi'),
                 'nama_ilmiah' => $this->post('nama_ilmiah'),
                 'hscode' => $this->post('hscode'),
@@ -184,6 +185,7 @@ class Komoditas extends RestController
             // $docnbr = date('Y') ."/" ;
             $insert = array(
                 'docnbr' => $this->put('docnbr'),
+                'is_psat' => $this->post('is_psat'),
                 'kd_komoditi' => $this->put('kd_komoditi'),
                 'nama_ilmiah' => $this->put('nama_ilmiah'),
                 'hscode' => $this->put('hscode'),

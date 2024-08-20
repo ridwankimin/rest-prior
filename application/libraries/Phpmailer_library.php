@@ -16,10 +16,18 @@
             $mail->isSMTP();
             // $mail->Host     = 'smtp.hostinger.com';
             // $mail->SMTPDebug = 1;
-            $mail->Host     = 'mail.karantinaindonesia.go.id';
+
+            // $mail->Host     = 'mail.karantinaindonesia.go.id';
+            // $mail->SMTPAuth = true;
+            // $mail->Username = 'notice@karantinaindonesia.go.id';
+            // $mail->Password = 'R4h4s14';
+            // $mail->SMTPSecure = 'STARTTLS';
+            // $mail->Port     = 587;
+
+            $mail->Host     = 'smtp.kirimemail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'noreply@karantinaindonesia.go.id';
-            $mail->Password = 'R4h4s14';
+            $mail->Password = 'GKuDcyTS';
             $mail->SMTPSecure = 'STARTTLS';
             $mail->Port     = 587;
             // $mail->Username = 'info@karantinaindonesia.id';
@@ -27,7 +35,7 @@
             // $mail->SMTPSecure = 'ssl';
             // $mail->Port     = 465;
 
-            $mail->setFrom('noreply@karantinaindonesia.go.id', 'Indonesian Quarantine Authority');
+            $mail->setFrom('notice@karantinaindonesia.go.id', 'Prior Notice');
             // $mail->setFrom('info@karantinaindonesia.id', 'Indonesian Quarantine Authority');
             // $mail->addReplyTo('info@karantinaindonesia.id', 'Indonesian Quarantine Authority');
 
