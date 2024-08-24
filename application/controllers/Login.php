@@ -29,8 +29,8 @@ class Login extends RestController
             $cekemail = $this->regis->cekemail($this->post('email'));
             if ($cekemail) {
                 if ($cekemail[0]['status'] == 1) {
-                    if (password_verify($this->post('password'), $cekemail[0]['pass'])) {
-                        $update = array('pass' => password_hash($this->post('newPassword'), PASSWORD_DEFAULT));
+                    if (password_verify(('Ndr00' . $this->post('password') . 'MukeG!l3'), $cekemail[0]['pass'])) {
+                        $update = array('pass' => password_hash(('Ndr00' . $this->post('newPassword') . 'MukeG!l3'), PASSWORD_DEFAULT));
                         $where = array('regid' => $cekemail[0]['regid']);
                         $this->regis->updateUser($update, $where);
 
@@ -72,7 +72,7 @@ class Login extends RestController
             $cekemail = $this->regis->cekemail($this->post('email'));
             if ($cekemail) {
                 if($cekemail[0]['status'] == 1) {
-                    if (password_verify($this->post('password'), $cekemail[0]['pass'])) {
+                    if (password_verify(('Ndr00' . $this->post('password') . 'MukeG!l3'), $cekemail[0]['pass'])) {
                         //update last login
                         $update = array('lastlogin' => $this->post('time'));
                         $where = array('regid' => $cekemail[0]['regid']);

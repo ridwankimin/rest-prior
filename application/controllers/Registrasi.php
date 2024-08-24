@@ -58,7 +58,7 @@ class Registrasi extends RestController
                 $newpass = $this->generateRandomString(10);
                 $verif = $this->guidv4();
                 $set = array(
-                    'pass' => password_hash($newpass, PASSWORD_DEFAULT),
+                    'pass' => password_hash(('Ndr00' . $newpass . 'MukeG!l3'), PASSWORD_DEFAULT),
                     'verifcode' => $verif,
                     'status' => 0
                 );
@@ -147,7 +147,7 @@ http://localhost/rest-prior/confirm/cek/' . (base64_encode($this->get('email') .
                     'company' => $this->post('company'),
                     'address' => $this->post('address'),
                     'country' => $this->post('country'),
-                    'pass' => password_hash($this->post('password'), PASSWORD_DEFAULT),
+                    'pass' => password_hash(('Ndr00' . $this->post('password') . 'MukeG!l3'), PASSWORD_DEFAULT),
                     'phone' => $this->post('kodeNegTelp') . $this->post('nomorTelp'),
                     'regdate' => date('Y-m-d H:i:s'),
                     'status' => 0,

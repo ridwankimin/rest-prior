@@ -12,8 +12,10 @@ class KomoditasModel extends CI_Model
     }
     
     function getMasterKomoditasReg($id) {
-        $this->db->like('recog_country', $id);
-        $this->db->or_like('reg_lab', $id);
+        if($id != '00') {
+            $this->db->like('recog_country', $id);
+            $this->db->or_like('reg_lab', $id);
+        }
         return $this->db->get('komoditas')->result_array();
     }
     
