@@ -25,12 +25,12 @@ class Confirm extends CI_Controller
                 $aktif = array('status' => 1);
                 $update = $this->regis->updateUser($aktif, $validasi);
                 if($update > 0) {
-                    redirect('http://localhost:3005/#/confirmation/' . $code);
+                    redirect('https://notice.karantinaindonesia.go.id/#/confirmation/' . $code);
                 } else {
-                    redirect('http://localhost:3005/#/confirmation/402');
+                    redirect('https://notice.karantinaindonesia.go.id/#/confirmation/402');
                 }
             } else {
-                redirect('http://localhost:3005/#/confirmation/404');
+                redirect('https://notice.karantinaindonesia.go.id/#/confirmation/404');
             }
         }
     }

@@ -63,33 +63,33 @@ class Registrasi extends RestController
                     'status' => 0
                 );
                 $updateUser = $this->regis->updateUser($set, array('regid' => $cekemail[0]['regid']));
-                if($updateUser > 0) {
-            $this->load->library('phpmailer_library');
+                if ($updateUser > 0) {
+                    $this->load->library('phpmailer_library');
 
-            $isi = '<p>Your new password is: <strong>' . $newpass . '</strong></p></br>
+                    $isi = '<p>Your new password is: <strong>' . $newpass . '</strong></p></br>
 
-To activate your new password, please click on this link: </br></br>
-http://localhost/rest-prior/confirm/cek/' . (base64_encode($this->get('email') . "_" . $verif)) . '
-</br></br></br>
+<p>To activate your new password, please click on this link: </br></br>
+' . base_url() . 'confirm/cek/' . (base64_encode($this->get('email') . "_" . $verif)) . '</p>
+</br></br>
 <strong>Perhatian</strong>:
 <p>E-mail ini dan dokumen lampirannya ditujukan untuk digunakan oleh penerima e-mail. Informasi yang terdapat dalam e-mail ini dapat bersifat RAHASIA, bila Anda bukan orang yang tepat untuk menerima e-mail ini segera memberitahukan ke pengirimnya dan menghapus e-mail ini dari komputer Anda. Anda dilarang memperbanyak, menyebarkan dan menyalin informasi kepada pihak lain. Isi e-mail ini mungkin saja berisi pandangan dan pendapat pribadi pengirimnya dan tidak mewakili pandangan dan/atau pendapat Kementerian Pertanian, kecuali bila dinyatakan dengan jelas demikian. Walaupun e-mail ini sudah diperiksa terhadap virus komputer, Kementerian Pertanian tidak bertanggungjawab atas kerusakan yang diakibatkan oleh e-mail ini jika terkena virus atau gangguan komunikasi.</p>
 </br>
 <strong>Disclaimer</strong>:
 <p>The contents of this e-mail and attachments are confidential and subject to legal privilege. If you are not the intended recipient, you are strictly prohibited and may be unlawful to use, copy, store, distribute, disclose or communicate any part of it to others and you are obliged to return it immediately to sender notify us and delete the e-mail and any attachments from your system. Ministry Of Agriculture accepts no liability for the content of this email, or for the consequences of any actions taken on the basis of the information provided, unless that information is subsequently confirmed in writing. Any views or opinions presented in this email are solely those of the author and do not necessarily represent those of Ministry Of Agriculture. The recipient should check this email and any attachments for the presence of viruses. Ministry Of Agriculture accepts no liability for any damage caused by any virus transmitted by this email.</p>';
 
-            // PHPMailer object
-            $mail = $this->phpmailer_library->sendMail($this->get('email'), 'Prior Notice Reset Password Confirmation', $isi);
-            if ($mail['status']) {
-                $this->response([
-                    'status' => TRUE,
-                    'message' => 'Reset password success, please check your email to activated your account'
-                ], RESTController::HTTP_OK);
-            } else {
-                $this->response([
-                    'status' => FALSE,
-                    'message' => 'Send email failed - ' . $mail['message']
-                ], RESTController::HTTP_BAD_REQUEST);
-            }
+                    // PHPMailer object
+                    $mail = $this->phpmailer_library->sendMail($this->get('email'), 'Prior Notice Reset Password Confirmation', $isi);
+                    if ($mail['status']) {
+                        $this->response([
+                            'status' => TRUE,
+                            'message' => 'Reset password success, please check your email to activated your account'
+                        ], RESTController::HTTP_OK);
+                    } else {
+                        $this->response([
+                            'status' => FALSE,
+                            'message' => 'Send email failed - ' . $mail['message']
+                        ], RESTController::HTTP_BAD_REQUEST);
+                    }
                 } else {
                     $this->response([
                         'status' => FALSE,
@@ -105,7 +105,8 @@ http://localhost/rest-prior/confirm/cek/' . (base64_encode($this->get('email') .
         }
     }
 
-    public function index_post() {
+    public function index_post()
+    {
         $this->form_validation->set_data($this->post());
         $this->form_validation->set_rules('firstname', 'First Name', 'required|max_length[100]');
         $this->form_validation->set_rules('lastname', 'Last Name', 'required|max_length[100]');
@@ -116,7 +117,7 @@ http://localhost/rest-prior/confirm/cek/' . (base64_encode($this->get('email') .
         $this->form_validation->set_rules('nomorTelp', 'Phone Number', 'required|max_length[45]');
         $this->form_validation->set_rules('email', 'Email', 'required|max_length[50]');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
-        
+
         if ($this->form_validation->run() == FALSE) {
             $this->response([
                 'status' => FALSE,
@@ -124,8 +125,8 @@ http://localhost/rest-prior/confirm/cek/' . (base64_encode($this->get('email') .
             ], RESTController::HTTP_BAD_REQUEST);
         } else {
             $cekemail = $this->regis->cekemail($this->post('email'));
-            if($cekemail) {
-                if($cekemail[0]['status'] == 0) {
+            if ($cekemail) {
+                if ($cekemail[0]['status'] == 0) {
                     $this->response([
                         'status' => FALSE,
                         'message' => 'Your account is not active yet, please check your email for activation'
@@ -156,15 +157,15 @@ http://localhost/rest-prior/confirm/cek/' . (base64_encode($this->get('email') .
                     'created_at' => date('Y-m-d H:i:s')
                 );
                 $insert = $this->regis->insertUser($input);
-                if($insert > 0) {
+                if ($insert > 0) {
                     $this->load->library('phpmailer_library');
 
                     $isi = '<p>To activate your account, please click on this link:</p></br></br>
                     
-                    http://localhost/rest-prior/confirm/cek/' . (base64_encode($this->post('email') . "_" . $verif));
+                    ' . base_url() . 'confirm/cek/' . (base64_encode($this->post('email') . "_" . $verif));
                     // PHPMailer object
                     $mail = $this->phpmailer_library->sendMail($this->post('email'), 'Prior Notice Registration Confirmation', $isi);
-                    if($mail['status']) {
+                    if ($mail['status']) {
                         $this->response([
                             'status' => TRUE,
                             'message' => 'Please check your email to activated your account'

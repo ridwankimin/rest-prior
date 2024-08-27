@@ -15,7 +15,8 @@ class Login extends RestController
         $this->load->model('RegistrasiModel', 'regis');
     }
 
-    public function reset_post() {
+    public function reset_post()
+    {
         $this->form_validation->set_data($this->post());
         $this->form_validation->set_rules('email', 'Email', 'required|max_length[50]');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
@@ -59,7 +60,8 @@ class Login extends RestController
         }
     }
 
-    public function index_post() {
+    public function index_post()
+    {
         $this->form_validation->set_data($this->post());
         $this->form_validation->set_rules('email', 'Email', 'required|max_length[50]');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
@@ -71,19 +73,19 @@ class Login extends RestController
         } else {
             $cekemail = $this->regis->cekemail($this->post('email'));
             if ($cekemail) {
-                if($cekemail[0]['status'] == 1) {
+                if ($cekemail[0]['status'] == 1) {
                     if (password_verify(('Ndr00' . $this->post('password') . 'MukeG!l3'), $cekemail[0]['pass'])) {
                         //update last login
                         $update = array('lastlogin' => $this->post('time'));
                         $where = array('regid' => $cekemail[0]['regid']);
                         $this->regis->updateUser($update, $where);
-                        
+
                         unset($cekemail[0]["pass"]);
                         unset($cekemail[0]["level"]);
                         unset($cekemail[0]["status"]);
                         unset($cekemail[0]["ip"]);
                         unset($cekemail[0]["verifcode"]);
-                        
+
                         $date = strtotime($this->post('time'));
                         $this->response([
                             'status' => TRUE,
